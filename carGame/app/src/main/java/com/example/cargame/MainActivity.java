@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,11 +13,13 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ImageView[][] grid = new ImageView[8][3];
-    private int carPositionRow = 7;
-    private int carPositionCol = 1;
+    private ImageView[][] grid;
+    private int boyPositionRow = 8;
+    private int boyPositionCol = 1;
     private int lives = 3;
     private Handler handler = new Handler();
+    private int currentImageResource = R.drawable.boy; // משתנה לעקוב אחרי התמונה המוצגת
+    private int delayTimer = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +27,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initializeGrid();
-        updateCarPosition();
-
         Button btnLeft = findViewById(R.id.btn_left);
         Button btnRight = findViewById(R.id.btn_right);
 
@@ -49,18 +48,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializeGrid() {
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 3; j++) {
-                String imageViewId = "grid_item_" + (i + 1) + "_" + (j + 1);
-                int resId = getResources().getIdentifier(imageViewId, "id", getPackageName());
-                grid[i][j] = findViewById(resId);
-            }
-        }
+        grid=new ImageView[][]{
+                {findViewById(R.id.grid_item_0_0), findViewById(R.id.grid_item_0_1), findViewById(R.id.grid_item_0_2)},
+                {findViewById(R.id.grid_item_1_0), findViewById(R.id.grid_item_1_1), findViewById(R.id.grid_item_1_2)},
+                {findViewById(R.id.grid_item_2_0), findViewById(R.id.grid_item_2_1), findViewById(R.id.grid_item_2_2)},
+                {findViewById(R.id.grid_item_3_0), findViewById(R.id.grid_item_3_1), findViewById(R.id.grid_item_3_2)},
+                {findViewById(R.id.grid_item_4_0), findViewById(R.id.grid_item_4_1), findViewById(R.id.grid_item_4_2)},
+                {findViewById(R.id.grid_item_5_0), findViewById(R.id.grid_item_5_1), findViewById(R.id.grid_item_5_2)},
+                {findViewById(R.id.grid_item_6_0), findViewById(R.id.grid_item_6_1), findViewById(R.id.grid_item_6_2)},
+                {findViewById(R.id.grid_item_7_0), findViewById(R.id.grid_item_7_1), findViewById(R.id.grid_item_7_2)},
+                {findViewById(R.id.grid_item_8_0), findViewById(R.id.grid_item_8_1), findViewById(R.id.grid_item_8_2)}
+        };
     }
 
     private void updateCarPosition() {
-        clearGrid();
-        grid[carPositionRow][carPositionCol].setImageResource(R.drawable.car);
+        //clearGrid();
+        grid[boyPositionRow][boyPositionCol].setImageResource(currentImageResource);
     }
 
     private void clearGrid() {
@@ -72,15 +75,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void moveCarLeft() {
-        if (carPositionCol > 0) {
-            carPositionCol--;
+        if (boyPositionCol > 0) {
+            grid[boyPositionRow][boyPositionCol].setImageResource(0);
+            boyPositionCol--;
             updateCarPosition();
         }
     }
 
     private void moveCarRight() {
-        if (carPositionCol < 2) {
-            carPositionCol++;
+        if (boyPositionCol < 2) {
+            grid[boyPositionRow][boyPositionCol].setImageResource(0);
+            boyPositionCol++;
             updateCarPosition();
         }
     }
@@ -99,30 +104,30 @@ public class MainActivity extends AppCompatActivity {
     private void addObstacle() {
         Random rand = new Random();
         int lane = rand.nextInt(3);
-        grid[0][lane].setImageResource(R.drawable.obstacle);
+        grid[0][lane].setImageResource(R.drawable.fast);
 
         moveObstacleDown(0, lane);
     }
 
     private void moveObstacleDown(final int row, final int col) {
-        if (row < 7) {
+        if (row < 8) {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     grid[row][col].setImageResource(0);
-                    grid[row + 1][col].setImageResource(R.drawable.obstacle);
+                    grid[row + 1][col].setImageResource(R.drawable.fast);
                     moveObstacleDown(row + 1, col);
                 }
-            }, 500);
+            }, delayTimer);
         } else {
             grid[row][col].setImageResource(0);
         }
     }
 
     private void checkCollision() {
-        if (grid[carPositionRow - 1][carPositionCol].getDrawable() != null &&
-                grid[carPositionRow - 1][carPositionCol].getDrawable().getConstantState() ==
-                        getResources().getDrawable(R.drawable.obstacle).getConstantState()) {
+        if (grid[boyPositionRow - 1][boyPositionCol].getDrawable() != null &&
+                grid[boyPositionRow - 1][boyPositionCol].getDrawable().getConstantState() ==
+                        getResources().getDrawable(R.drawable.fast).getConstantState()) {
             lives--;
             updateLives();
             if (lives <= 0) {
