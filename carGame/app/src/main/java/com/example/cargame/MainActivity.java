@@ -1,11 +1,17 @@
 package com.example.cargame;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.content.Context;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -30,28 +36,28 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initializeGrid();
+        updateScore();
         Button btnLeft = findViewById(R.id.btn_left);
         Button btnRight = findViewById(R.id.btn_right);
 
         btnLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                moveCarLeft();
+                moveCharacterLeft();
             }
         });
 
         btnRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                moveCarRight();
+                moveCharacterRight();
             }
         });
-
         startGame();
     }
 
     private void initializeGrid() {
-        grid=new ImageView[][]{
+        grid = new ImageView[][]{
                 {findViewById(R.id.grid_item_0_0), findViewById(R.id.grid_item_0_1), findViewById(R.id.grid_item_0_2)},
                 {findViewById(R.id.grid_item_1_0), findViewById(R.id.grid_item_1_1), findViewById(R.id.grid_item_1_2)},
                 {findViewById(R.id.grid_item_2_0), findViewById(R.id.grid_item_2_1), findViewById(R.id.grid_item_2_2)},
@@ -64,48 +70,41 @@ public class MainActivity extends AppCompatActivity {
         };
     }
 
-    private void updateCarPosition() {
-        //clearGrid();
+    private void updateCurrentImage() {
         grid[boyPositionRow][boyPositionCol].setImageResource(currentImageResource);
     }
 
-    private void clearGrid() {
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 3; j++) {
-                grid[i][j].setImageResource(0);
-            }
-        }
-    }
-
-    private void moveCarLeft() {
+    private void moveCharacterLeft() {
         if (boyPositionCol > 0) {
             grid[boyPositionRow][boyPositionCol].setImageResource(0);
             boyPositionCol--;
-            updateCarPosition();
+            updateCurrentImage();
         }
     }
 
-    private void moveCarRight() {
+    private void moveCharacterRight() {
         if (boyPositionCol < 2) {
             grid[boyPositionRow][boyPositionCol].setImageResource(0);
             boyPositionCol++;
-            updateCarPosition();
+            updateCurrentImage();
         }
     }
 
     private void startGame() {
+        initialState();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                updateScore();
                 ticks++;
                 if (ticks % 2 == 0) {
                     addObstacle(R.drawable.fast);
-                } else if (ticks % 5 ==0) {
+                } else if (ticks % 5 == 0) {
                     addObstacle(R.drawable.boxing_gloves); //give shield
                 }
-                if(ticks % 30 == 0){
-                    dummyTimer=dummyTimer* 0.9; //make the game faster
-                    delayTimer=(long) dummyTimer;
+                if (ticks % 10 == 0) {
+                    dummyTimer = dummyTimer * 0.9; //make the game faster
+                    delayTimer = (long) dummyTimer;
                 }
                 //checkCollision();
                 handler.postDelayed(this, delayTimer);
@@ -118,7 +117,6 @@ public class MainActivity extends AppCompatActivity {
         int lane = rand.nextInt(3);
         grid[0][lane].setImageResource(obstacleImage);
         moveObstacleDown(0, lane, obstacleImage);
-
     }
 
     private void moveObstacleDown(final int row, final int col, final int obstacleImage) {
@@ -128,43 +126,43 @@ public class MainActivity extends AppCompatActivity {
                 public void run() {
                     grid[row][col].setImageResource(0);
                     grid[row + 1][col].setImageResource(obstacleImage);
-                    moveObstacleDown(row + 1, col,obstacleImage);
+                    moveObstacleDown(row + 1, col, obstacleImage);
                 }
             }, delayTimer);
         } else {
-            //grid[boyPositionRow][boyPositionCol].setImageResource(currentImageResource);
-            if(col==boyPositionCol && obstacleImage==R.drawable.fast){
-                collision();
-            } else if (col==boyPositionCol && obstacleImage==R.drawable.boxing_gloves) {
-                currentImageResource=R.drawable.viking;
-            }
             grid[row][col].setImageResource(0);
-            grid[boyPositionRow][boyPositionCol].setImageResource(currentImageResource);
+            if (col == boyPositionCol && obstacleImage == R.drawable.fast) {
+                collision();
+                updateCurrentImage();
+            } else if (col == boyPositionCol && obstacleImage == R.drawable.boxing_gloves) {
+                currentImageResource = R.drawable.viking;
+                updateCurrentImage();
+            }
         }
     }
 
+    private void clearGrid() {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 3; j++) {
+                grid[i][j].setImageResource(0);
+            }
+        }
+    }
     private void collision() {
-        lives--;
-        updateLives();
+        if(currentImageResource == R.drawable.viking){
+            currentImageResource=R.drawable.boy;
+            updateCurrentImage();
+        }else {
+            lives--;
+            updateLives();
+        }
+        vibratePhone(); //need to check this
         if (lives <= 0) {
             Toast.makeText(this, "Game Over!", Toast.LENGTH_SHORT).show();
             handler.removeCallbacksAndMessages(null);
-        }else {
+            showStartGameDialog();
+        } else {
             Toast.makeText(this, "Crash!", Toast.LENGTH_SHORT).show();
-        }
-    }
-    private void checkCollision() {
-        if (grid[boyPositionRow - 1][boyPositionCol].getDrawable() != null &&
-                grid[boyPositionRow - 1][boyPositionCol].getDrawable().getConstantState() ==
-                        getResources().getDrawable(R.drawable.fast, null).getConstantState()) {
-            lives--;
-            updateLives();
-            if (lives <= 0) {
-                Toast.makeText(this, "Game Over!", Toast.LENGTH_SHORT).show();
-                handler.removeCallbacksAndMessages(null);
-            } else {
-                Toast.makeText(this, "Crash!", Toast.LENGTH_SHORT).show();
-            }
         }
     }
 
@@ -175,5 +173,49 @@ public class MainActivity extends AppCompatActivity {
         heart1.setVisibility(lives >= 1 ? View.VISIBLE : View.INVISIBLE);
         heart2.setVisibility(lives >= 2 ? View.VISIBLE : View.INVISIBLE);
         heart3.setVisibility(lives >= 3 ? View.VISIBLE : View.INVISIBLE);
+    }
+
+    // Function to create vibration
+    private void vibratePhone() {
+        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        if (vibrator != null) {
+            VibrationEffect effect = VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE);
+            vibrator.vibrate(effect);
+        }
+    }
+
+    private void updateScore() {
+        TextView scoreTextView = findViewById(R.id.score);
+        String scoreText = getString(R.string.score_text, ticks);
+        scoreTextView.setText(scoreText);
+    }
+
+    private void showStartGameDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("האם אתה רוצה להתחיל משחק חדש?")
+                .setPositiveButton("כן", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Toast.makeText(MainActivity.this, "המשחק מתחיל!", Toast.LENGTH_SHORT).show();
+                        startGame();
+                    }
+                })
+                .setNegativeButton("לא", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+        builder.create().show();
+    }
+    private void initialState() {
+        clearGrid();
+        lives = 3;
+        updateLives();
+        ticks = 0;
+        dummyTimer = 1000;
+        delayTimer = 1000;
+        boyPositionRow = 8;
+        boyPositionCol = 1;
+        updateCurrentImage();
+        updateScore();
     }
 }
