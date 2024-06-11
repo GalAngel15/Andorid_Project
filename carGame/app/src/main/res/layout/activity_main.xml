@@ -79,22 +79,18 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:src="@drawable/ball"
-                android:visibility="invisible"/>
+               />
             <ImageView
                 android:id="@+id/grid_item_0_1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/ball"
-                android:visibility="visible"/>
+                android:layout_weight="1" />
             <ImageView
                 android:id="@+id/grid_item_0_2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:src="@drawable/ball"
-                android:visibility="invisible"/>
+                />
         </LinearLayout>
 
         <!-- Row 2 -->
@@ -108,22 +104,19 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:src="@drawable/fast"
-                android:visibility="visible"/>
+                />
             <ImageView
                 android:id="@+id/grid_item_1_1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:src="@drawable/fast"
-                android:visibility="invisible"/>
+               />
             <ImageView
                 android:id="@+id/grid_item_1_2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:src="@drawable/fast"
-                android:visibility="invisible"/>
+                />
         </LinearLayout>
 
         <!-- Row 3 -->
@@ -137,22 +130,17 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:src="@drawable/fireball"
-                android:visibility="visible"/>
+                />
             <ImageView
                 android:id="@+id/grid_item_2_1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/fireball"
-                android:visibility="invisible"/>
+                android:layout_weight="1"/>
             <ImageView
                 android:id="@+id/grid_item_2_2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/fireball"
-                android:visibility="invisible"/>
+                android:layout_weight="1"/>
         </LinearLayout>
 
         <!-- Row 4 -->
@@ -165,23 +153,17 @@
                 android:id="@+id/grid_item_3_0"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/boxing_gloves"
-                android:visibility="invisible"/>
+                android:layout_weight="1"/>
             <ImageView
                 android:id="@+id/grid_item_3_1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/boxing_gloves"
-                android:visibility="invisible"/>
+                android:layout_weight="1"/>
             <ImageView
                 android:id="@+id/grid_item_3_2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/boxing_gloves"
-                android:visibility="visible"/>
+                android:layout_weight="1"/>
         </LinearLayout>
 
         <!-- Row 5 -->
@@ -194,23 +176,17 @@
                 android:id="@+id/grid_item_4_0"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/ball"
-                android:visibility="visible"/>
+                android:layout_weight="1"/>
             <ImageView
                 android:id="@+id/grid_item_4_1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/ball"
-                android:visibility="invisible"/>
+                android:layout_weight="1"/>
             <ImageView
                 android:id="@+id/grid_item_4_2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/ball"
-                android:visibility="invisible"/>
+                android:layout_weight="1"/>
         </LinearLayout>
 
         <!-- Row 6 -->
@@ -223,23 +199,17 @@
                 android:id="@+id/grid_item_5_0"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/fast"
-                android:visibility="invisible"/>
+                android:layout_weight="1"/>
             <ImageView
                 android:id="@+id/grid_item_5_1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/fast"
-                android:visibility="visible"/>
+                android:layout_weight="1"/>
             <ImageView
                 android:id="@+id/grid_item_5_2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/fast"
-                android:visibility="invisible"/>
+                android:layout_weight="1"/>
         </LinearLayout>
 
         <!-- Row 7 -->
@@ -252,23 +222,17 @@
                 android:id="@+id/grid_item_6_0"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/fireball"
-                android:visibility="visible"/>
+                android:layout_weight="1"/>
             <ImageView
                 android:id="@+id/grid_item_6_1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/fireball"
-                android:visibility="invisible"/>
+                android:layout_weight="1"/>
             <ImageView
                 android:id="@+id/grid_item_6_2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/fireball"
-                android:visibility="invisible"/>
+                android:layout_weight="1"/>
         </LinearLayout>
 
         <!-- Row 8 -->
@@ -281,23 +245,17 @@
                 android:id="@+id/grid_item_7_0"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/fireball"
-                android:visibility="invisible"/>
+                android:layout_weight="1"/>
             <ImageView
                 android:id="@+id/grid_item_7_1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/fireball"
-                android:visibility="invisible"/>
+                android:layout_weight="1"/>
             <ImageView
                 android:id="@+id/grid_item_7_2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/fireball"
-                android:visibility="visible"/>
+                android:layout_weight="1"/>
         </LinearLayout>
         <!-- Row 9 -->
         <LinearLayout

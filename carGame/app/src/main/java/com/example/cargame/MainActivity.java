@@ -19,7 +19,10 @@ public class MainActivity extends AppCompatActivity {
     private int lives = 3;
     private Handler handler = new Handler();
     private int currentImageResource = R.drawable.boy; // משתנה לעקוב אחרי התמונה המוצגת
-    private int delayTimer = 1000;
+    private double dummyTimer = 1000;
+    private long delayTimer = 1000;
+    private int ticks = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,40 +97,66 @@ public class MainActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                addObstacle();
-                checkCollision();
-                handler.postDelayed(this, 1000);
+                ticks++;
+                if (ticks % 2 == 0) {
+                    addObstacle(R.drawable.fast);
+                } else if (ticks % 5 ==0) {
+                    addObstacle(R.drawable.boxing_gloves); //give shield
+                }
+                if(ticks % 30 == 0){
+                    dummyTimer=dummyTimer* 0.9; //make the game faster
+                    delayTimer=(long) dummyTimer;
+                }
+                //checkCollision();
+                handler.postDelayed(this, delayTimer);
             }
-        }, 1000);
+        }, delayTimer);
     }
 
-    private void addObstacle() {
+    private void addObstacle(final int obstacleImage) {
         Random rand = new Random();
         int lane = rand.nextInt(3);
-        grid[0][lane].setImageResource(R.drawable.fast);
+        grid[0][lane].setImageResource(obstacleImage);
+        moveObstacleDown(0, lane, obstacleImage);
 
-        moveObstacleDown(0, lane);
     }
 
-    private void moveObstacleDown(final int row, final int col) {
+    private void moveObstacleDown(final int row, final int col, final int obstacleImage) {
         if (row < 8) {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     grid[row][col].setImageResource(0);
-                    grid[row + 1][col].setImageResource(R.drawable.fast);
-                    moveObstacleDown(row + 1, col);
+                    grid[row + 1][col].setImageResource(obstacleImage);
+                    moveObstacleDown(row + 1, col,obstacleImage);
                 }
             }, delayTimer);
         } else {
+            //grid[boyPositionRow][boyPositionCol].setImageResource(currentImageResource);
+            if(col==boyPositionCol && obstacleImage==R.drawable.fast){
+                collision();
+            } else if (col==boyPositionCol && obstacleImage==R.drawable.boxing_gloves) {
+                currentImageResource=R.drawable.viking;
+            }
             grid[row][col].setImageResource(0);
+            grid[boyPositionRow][boyPositionCol].setImageResource(currentImageResource);
         }
     }
 
+    private void collision() {
+        lives--;
+        updateLives();
+        if (lives <= 0) {
+            Toast.makeText(this, "Game Over!", Toast.LENGTH_SHORT).show();
+            handler.removeCallbacksAndMessages(null);
+        }else {
+            Toast.makeText(this, "Crash!", Toast.LENGTH_SHORT).show();
+        }
+    }
     private void checkCollision() {
         if (grid[boyPositionRow - 1][boyPositionCol].getDrawable() != null &&
                 grid[boyPositionRow - 1][boyPositionCol].getDrawable().getConstantState() ==
-                        getResources().getDrawable(R.drawable.fast).getConstantState()) {
+                        getResources().getDrawable(R.drawable.fast, null).getConstantState()) {
             lives--;
             updateLives();
             if (lives <= 0) {
@@ -143,7 +172,6 @@ public class MainActivity extends AppCompatActivity {
         ImageView heart1 = findViewById(R.id.heart1);
         ImageView heart2 = findViewById(R.id.heart2);
         ImageView heart3 = findViewById(R.id.heart3);
-
         heart1.setVisibility(lives >= 1 ? View.VISIBLE : View.INVISIBLE);
         heart2.setVisibility(lives >= 2 ? View.VISIBLE : View.INVISIBLE);
         heart3.setVisibility(lives >= 3 ? View.VISIBLE : View.INVISIBLE);
