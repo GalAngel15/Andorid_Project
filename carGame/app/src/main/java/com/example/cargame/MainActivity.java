@@ -2,10 +2,10 @@ package com.example.cargame;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,19 +15,29 @@ import android.os.Vibrator;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.button.MaterialButton;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
     private ImageView[][] grid;
-    private int boyPositionRow = 8;
-    private int boyPositionCol = 1;
+    private int characterPositionRow = 8;
+    private int characterPositionCol = 1;
     private int lives = 3;
     private Handler handler = new Handler();
-    private int currentImageResource = R.drawable.boy; // משתנה לעקוב אחרי התמונה המוצגת
+    private int currentImageResource = R.drawable.goku; // משתנה לעקוב אחרי התמונה המוצגת
     private double dummyTimer = 1000;
     private long delayTimer = 1000;
     private int ticks = 0;
+    private int[] enemies = {R.drawable.frieza, R.drawable.kidbuu, R.drawable.goldenfrieza};
+    private List<Obstacle> obstacles = new ArrayList<>();
+    private boolean gameOver = false;
+    MediaPlayer mediaPlayer;
+
 
 
     @Override
@@ -37,8 +47,10 @@ public class MainActivity extends AppCompatActivity {
 
         initializeGrid();
         updateScore();
-        Button btnLeft = findViewById(R.id.btn_left);
-        Button btnRight = findViewById(R.id.btn_right);
+        MaterialButton btnLeft = findViewById(R.id.btn_left);
+        MaterialButton btnRight = findViewById(R.id.btn_right);
+        MaterialButton btnUp = findViewById(R.id.btn_up);
+        MaterialButton btnDown = findViewById(R.id.btn_down);
 
         btnLeft.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,6 +65,20 @@ public class MainActivity extends AppCompatActivity {
                 moveCharacterRight();
             }
         });
+        btnUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                moveCharacterUp();
+            }
+        });
+
+        btnDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                moveCharacterDown();
+            }
+        });
+        playSound();
         startGame();
     }
 
@@ -71,21 +97,37 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateCurrentImage() {
-        grid[boyPositionRow][boyPositionCol].setImageResource(currentImageResource);
+        grid[characterPositionRow][characterPositionCol].setImageResource(currentImageResource);
     }
 
     private void moveCharacterLeft() {
-        if (boyPositionCol > 0) {
-            grid[boyPositionRow][boyPositionCol].setImageResource(0);
-            boyPositionCol--;
+        if (characterPositionCol > 0) {
+            grid[characterPositionRow][characterPositionCol].setImageResource(0);
+            characterPositionCol--;
             updateCurrentImage();
         }
     }
 
     private void moveCharacterRight() {
-        if (boyPositionCol < 2) {
-            grid[boyPositionRow][boyPositionCol].setImageResource(0);
-            boyPositionCol++;
+        if (characterPositionCol < 2) {
+            grid[characterPositionRow][characterPositionCol].setImageResource(0);
+            characterPositionCol++;
+            updateCurrentImage();
+        }
+    }
+
+    private void moveCharacterUp() {
+        if (characterPositionRow > 0) {
+            grid[characterPositionRow][characterPositionCol].setImageResource(0);
+            characterPositionRow--;
+            updateCurrentImage();
+        }
+    }
+
+    private void moveCharacterDown() {
+        if (characterPositionRow < 8) {
+            grid[characterPositionRow][characterPositionCol].setImageResource(0);
+            characterPositionRow++;
             updateCurrentImage();
         }
     }
@@ -95,10 +137,13 @@ public class MainActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                if(gameOver)
+                    return;
                 updateScore();
+                moveAllObstaclesDown();
                 ticks++;
                 if (ticks % 2 == 0) {
-                    addObstacle(R.drawable.fast);
+                    addObstacle(enemies[new Random().nextInt(enemies.length)]);
                 } else if (ticks % 5 == 0) {
                     addObstacle(R.drawable.boxing_gloves); //give shield
                 }
@@ -106,7 +151,6 @@ public class MainActivity extends AppCompatActivity {
                     dummyTimer = dummyTimer * 0.9; //make the game faster
                     delayTimer = (long) dummyTimer;
                 }
-                //checkCollision();
                 handler.postDelayed(this, delayTimer);
             }
         }, delayTimer);
@@ -116,7 +160,29 @@ public class MainActivity extends AppCompatActivity {
         Random rand = new Random();
         int lane = rand.nextInt(3);
         grid[0][lane].setImageResource(obstacleImage);
-        moveObstacleDown(0, lane, obstacleImage);
+        obstacles.add(new Obstacle(0, lane, obstacleImage));
+    }
+
+    private void moveAllObstaclesDown() {
+        for (int i=0; i<obstacles.size(); i++) {
+            Obstacle obstacle = obstacles.get(i);
+            if(!(characterPositionRow == obstacle.getRow() && characterPositionCol == obstacle.getCol())) {
+                grid[obstacle.getRow()][obstacle.getCol()].setImageResource(0);
+            }
+            if (obstacle.getRow() < 8) {
+                if (!checkCollision(obstacle.getRow() + 1, obstacle.getCol(), obstacle.getImageResource())) {
+                    obstacle.moveDown();
+                    grid[obstacle.getRow()][obstacle.getCol()].setImageResource(obstacle.getImageResource());
+                }else {
+                    obstacles.remove(i);
+                    i--;
+                }
+            } else {
+                obstacles.remove(i);
+                i--;
+                checkCollision(obstacle.getRow(), obstacle.getCol(), obstacle.getImageResource());
+            }
+        }
     }
 
     private void moveObstacleDown(final int row, final int col, final int obstacleImage) {
@@ -124,20 +190,18 @@ public class MainActivity extends AppCompatActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    grid[row][col].setImageResource(0);
-                    grid[row + 1][col].setImageResource(obstacleImage);
-                    moveObstacleDown(row + 1, col, obstacleImage);
+                    if(!(characterPositionRow == row && characterPositionCol == col)) {
+                        grid[row][col].setImageResource(0);
+                    }
+                    if (!checkCollision(row+1, col, obstacleImage)) {
+                        grid[row + 1][col].setImageResource(obstacleImage);
+                        moveObstacleDown(row + 1, col, obstacleImage);
+                    }
                 }
             }, delayTimer);
         } else {
             grid[row][col].setImageResource(0);
-            if (col == boyPositionCol && obstacleImage == R.drawable.fast) {
-                collision();
-                updateCurrentImage();
-            } else if (col == boyPositionCol && obstacleImage == R.drawable.boxing_gloves) {
-                currentImageResource = R.drawable.viking;
-                updateCurrentImage();
-            }
+            checkCollision(row, col, obstacleImage);
         }
     }
 
@@ -145,19 +209,34 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 3; j++) {
                 grid[i][j].setImageResource(0);
+                obstacles.clear();
             }
         }
     }
-    private void collision() {
-        if(currentImageResource == R.drawable.viking){
-            currentImageResource=R.drawable.boy;
+
+    private boolean checkCollision(final int row, final int col, final int obstacleImage) {
+        if (row == characterPositionRow && col == characterPositionCol && obstacleImage == R.drawable.boxing_gloves) {
+            currentImageResource = R.drawable.gokuss1;
             updateCurrentImage();
-        }else {
+            return true;
+        } else if (row == characterPositionRow && col == characterPositionCol) {
+            collision();
+            return true;
+        }
+        return false;
+    }
+
+    private void collision() {
+        if (currentImageResource == R.drawable.gokuss1) {
+            currentImageResource = R.drawable.goku;
+        } else {
             lives--;
             updateLives();
         }
+        updateCurrentImage();
         vibratePhone(); //need to check this
         if (lives <= 0) {
+            gameOver = true;
             Toast.makeText(this, "Game Over!", Toast.LENGTH_SHORT).show();
             handler.removeCallbacksAndMessages(null);
             showStartGameDialog();
@@ -196,6 +275,7 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton("כן", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Toast.makeText(MainActivity.this, "המשחק מתחיל!", Toast.LENGTH_SHORT).show();
+                        gameOver = false;
                         startGame();
                     }
                 })
@@ -206,6 +286,7 @@ public class MainActivity extends AppCompatActivity {
                 });
         builder.create().show();
     }
+
     private void initialState() {
         clearGrid();
         lives = 3;
@@ -213,9 +294,24 @@ public class MainActivity extends AppCompatActivity {
         ticks = 0;
         dummyTimer = 1000;
         delayTimer = 1000;
-        boyPositionRow = 8;
-        boyPositionCol = 1;
+        characterPositionRow = 8;
+        characterPositionCol = 1;
         updateCurrentImage();
         updateScore();
+    }
+    private void playSound() {
+        // Initialize MediaPlayer
+        mediaPlayer = MediaPlayer.create(this, R.raw.background_music);
+
+        // Start playing background music
+        mediaPlayer.start();
+    }
+    protected void onDestroy() {
+        super.onDestroy();
+        // Release MediaPlayer when the activity is destroyed
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
     }
 }
