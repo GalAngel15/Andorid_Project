@@ -133,6 +133,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startGame() {
+        gameOver = false;
+        playSound();
         initialState();
         handler.postDelayed(new Runnable() {
             @Override
@@ -185,26 +187,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void moveObstacleDown(final int row, final int col, final int obstacleImage) {
-        if (row < 8) {
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if(!(characterPositionRow == row && characterPositionCol == col)) {
-                        grid[row][col].setImageResource(0);
-                    }
-                    if (!checkCollision(row+1, col, obstacleImage)) {
-                        grid[row + 1][col].setImageResource(obstacleImage);
-                        moveObstacleDown(row + 1, col, obstacleImage);
-                    }
-                }
-            }, delayTimer);
-        } else {
-            grid[row][col].setImageResource(0);
-            checkCollision(row, col, obstacleImage);
-        }
-    }
-
     private void clearGrid() {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 3; j++) {
@@ -239,6 +221,7 @@ public class MainActivity extends AppCompatActivity {
             gameOver = true;
             Toast.makeText(this, "Game Over!", Toast.LENGTH_SHORT).show();
             handler.removeCallbacksAndMessages(null);
+            onDestroy();
             showStartGameDialog();
         } else {
             Toast.makeText(this, "Crash!", Toast.LENGTH_SHORT).show();
@@ -275,7 +258,6 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton("כן", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Toast.makeText(MainActivity.this, "המשחק מתחיל!", Toast.LENGTH_SHORT).show();
-                        gameOver = false;
                         startGame();
                     }
                 })
