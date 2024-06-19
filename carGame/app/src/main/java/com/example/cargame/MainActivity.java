@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void moveCharacterUp() {
-        if (characterPositionRow > 0) {
+        if (characterPositionRow > 1) {
             grid[characterPositionRow][characterPositionCol].setImageResource(0);
             characterPositionRow--;
             updateCurrentImage();
@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
                 if (ticks % 2 == 0) {
                     addObstacle(enemies[new Random().nextInt(enemies.length)]);
                 } else if (ticks % 5 == 0) {
-                    addObstacle(R.drawable.boxing_gloves); //give shield
+                    addObstacle(R.drawable.bonus); //give shield
                 }
                 if (ticks % 10 == 0) {
                     dummyTimer = dummyTimer * 0.9; //make the game faster
@@ -177,8 +177,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean checkCollision(final int row, final int col, final int obstacleImage) {
-        if (row == characterPositionRow && col == characterPositionCol && obstacleImage == R.drawable.boxing_gloves) {
-            currentImageResource = R.drawable.gokuss1;
+        if (row == characterPositionRow && col == characterPositionCol && obstacleImage == R.drawable.bonus) {
+            currentImageResource = R.drawable.gokuss3;
             updateCurrentImage();
             return true;
         } else if (row == characterPositionRow && col == characterPositionCol) {
@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void collision() {
-        if (currentImageResource == R.drawable.gokuss1) {
+        if (currentImageResource == R.drawable.gokuss3) {
             currentImageResource = R.drawable.goku;
         } else {
             lives--;
