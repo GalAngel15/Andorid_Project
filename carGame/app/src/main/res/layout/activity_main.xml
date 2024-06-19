@@ -293,10 +293,11 @@
     </LinearLayout>
 
     <!-- Control buttons -->
-    <androidx.constraintlayout.widget.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/control_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="#fff">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_left"
@@ -347,6 +348,4 @@
             app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </LinearLayout>
