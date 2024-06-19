@@ -18,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -28,13 +27,13 @@ public class MainActivity extends AppCompatActivity {
     private int characterPositionRow = 8;
     private int characterPositionCol = 1;
     private int lives = 3;
-    private Handler handler = new Handler();
+    private final Handler handler = new Handler();
     private int currentImageResource = R.drawable.goku; // משתנה לעקוב אחרי התמונה המוצגת
     private double dummyTimer = 1000;
     private long delayTimer = 1000;
     private int ticks = 0;
-    private int[] enemies = {R.drawable.frieza, R.drawable.kidbuu, R.drawable.goldenfrieza};
-    private List<Obstacle> obstacles = new ArrayList<>();
+    private final int[] enemies = {R.drawable.frieza, R.drawable.kidbuu, R.drawable.goldenfrieza};
+    private final List<Obstacle> obstacles = new ArrayList<>();
     private boolean gameOver = false;
     MediaPlayer mediaPlayer;
 
@@ -52,32 +51,13 @@ public class MainActivity extends AppCompatActivity {
         MaterialButton btnUp = findViewById(R.id.btn_up);
         MaterialButton btnDown = findViewById(R.id.btn_down);
 
-        btnLeft.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                moveCharacterLeft();
-            }
-        });
+        btnLeft.setOnClickListener(v->moveCharacterLeft());
 
-        btnRight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                moveCharacterRight();
-            }
-        });
-        btnUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                moveCharacterUp();
-            }
-        });
+        btnRight.setOnClickListener(v->moveCharacterRight());
 
-        btnDown.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                moveCharacterDown();
-            }
-        });
+        btnUp.setOnClickListener(v->moveCharacterUp());
+
+        btnDown.setOnClickListener(v->moveCharacterDown());
         playSound();
         startGame();
     }
