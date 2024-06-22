@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
     MediaPlayer mediaPlayer;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,13 +50,13 @@ public class MainActivity extends AppCompatActivity {
         MaterialButton btnUp = findViewById(R.id.btn_up);
         MaterialButton btnDown = findViewById(R.id.btn_down);
 
-        btnLeft.setOnClickListener(v->moveCharacterLeft());
+        btnLeft.setOnClickListener(v -> moveCharacterLeft());
 
-        btnRight.setOnClickListener(v->moveCharacterRight());
+        btnRight.setOnClickListener(v -> moveCharacterRight());
 
-        btnUp.setOnClickListener(v->moveCharacterUp());
+        btnUp.setOnClickListener(v -> moveCharacterUp());
 
-        btnDown.setOnClickListener(v->moveCharacterDown());
+        btnDown.setOnClickListener(v -> moveCharacterDown());
         playSound();
         startGame();
     }
@@ -119,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(gameOver)
+                if (gameOver)
                     return;
                 updateScore();
                 moveAllObstaclesDown();
@@ -146,16 +145,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void moveAllObstaclesDown() {
-        for (int i=0; i<obstacles.size(); i++) {
+        for (int i = 0; i < obstacles.size(); i++) {
             Obstacle obstacle = obstacles.get(i);
-            if(!(characterPositionRow == obstacle.getRow() && characterPositionCol == obstacle.getCol())) {
+            if (!(characterPositionRow == obstacle.getRow() && characterPositionCol == obstacle.getCol())) {
                 grid[obstacle.getRow()][obstacle.getCol()].setImageResource(0);
             }
             if (obstacle.getRow() < 8) {
                 if (!checkCollision(obstacle.getRow() + 1, obstacle.getCol(), obstacle.getImageResource())) {
                     obstacle.moveDown();
                     grid[obstacle.getRow()][obstacle.getCol()].setImageResource(obstacle.getImageResource());
-                }else {
+                } else {
                     obstacles.remove(i);
                     i--;
                 }
@@ -201,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
             gameOver = true;
             Toast.makeText(this, "Game Over!", Toast.LENGTH_SHORT).show();
             handler.removeCallbacksAndMessages(null);
-            onDestroy();
+            pauseSound();
             showStartGameDialog();
         } else {
             Toast.makeText(this, "Crash!", Toast.LENGTH_SHORT).show();
@@ -261,12 +260,20 @@ public class MainActivity extends AppCompatActivity {
         updateCurrentImage();
         updateScore();
     }
+
     private void playSound() {
         // Initialize MediaPlayer
         mediaPlayer = MediaPlayer.create(this, R.raw.background_music);
 
         // Start playing background music
         mediaPlayer.start();
+    }
+
+    private void pauseSound() {
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
     }
     protected void onDestroy() {
         super.onDestroy();
