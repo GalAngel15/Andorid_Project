@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">carGame</string>
     <string name="score_text">Score: %d</string>
+    <string name="game_title">Dragon Ball</string>
 </resources>
