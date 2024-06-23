@@ -1,8 +1,8 @@
-### Car Game Project
+### Game Project - Dragon Ball
 
 ## Overview
 
-This project is an Android game where the player navigates a character while avoiding obstacles and collecting bonuses that give him "shield". The game features animated characters, background music, and various game elements to enhance the player experience.
+This project is an Android game where the player navigates a character (goku) while avoiding obstacles and collecting bonuses that give him "shield". The game features animated characters, background music, and various game elements to enhance the player experience.
 
 ## Project Structure
 
@@ -58,3 +58,64 @@ The project is structured into several directories and files, each serving a spe
 - **Bonuses**: Collect bonuses to gain shield.
 - **Background Music**: Enjoy background music while playing the game.
 - **Dynamic UI**: The user interface updates dynamically based on the game state.
+
+  ### פרויקט משחק - דרגון בול
+
+## סקירה כללית
+
+הפרויקט הוא משחק אנדרואיד שבו השחקן שולט בדמות (גוקו) תוך הימנעות ממכשולים ואיסוף בונוסים שנותנים לו "מגן". המשחק כולל דמויות מונפשות, מוזיקת רקע ואלמנטים שונים לשיפור חוויית השחקן.
+
+## מבנה הפרויקט
+
+הפרויקט מחולק למספר תיקיות וקבצים, כל אחד מהם משמש מטרה מסוימת. להלן סקירה מפורטת של מבנה הפרויקט והמרכיבים העיקריים שלו:
+
+### תיקיות וקבצים
+
+1. **AndroidManifest.xml**
+   - קובץ המניפסט שמכיל מידע חיוני על האפליקציה, כגון מרכיביה, הרשאות ומטא נתונים.
+
+2. **ic_launcher-playstore.png**
+   - אייקון ההשקה של האפליקציה כפי שהוא מופיע בחנות Google Play.
+
+3. **קבצי Java (ממוקמים ב-`java/com/example/cargame/`)**
+   - **Character.java**: מייצג את דמות השחקן ומנהל את התכונות וההתנהגות שלה.
+   - **GameManager.java**: שולט בלוגיקת המשחק הכללית, כולל ניהול מצב המשחק ועדכונים.
+   - **MainActivity.java**: הפעילות הראשית שמשרתת כנקודת הכניסה לאפליקציה.
+   - **MusicManager.java**: מנהל מוזיקת רקע ואפקטים קוליים.
+   - **Obstacle.java**: מייצג מכשולים שהשחקן צריך להימנע מהם.
+   - **ObstacleManager.java**: מנהל יצירה, מיקום ותנועה של מכשולים.
+   - **UIManager.java**: מטפל באלמנטים של ממשק המשתמש ומעדכן אותם בהתאם למצב המשחק.
+
+4. **משאבי Drawable (ממוקמים ב-`res/drawable/`)**
+   - תמונות וקבצי XML המגדירים משאבי Drawable שונים המשמשים במשחק, כגון חצים, בונוסים, תמונות דמויות (גוקו, פריזה וכו'), ורקעים.
+
+5. **משאבי Raw (ממוקמים ב-`res/raw/`)**
+   - **background_music.mp3**: קובץ מוזיקת הרקע שמתנגן במהלך המשחק.
+
+6. **משאבי Values (ממוקמים ב-`res/values/`)**
+   - **colors.xml**: מגדיר משאבי צבע המשמשים באפליקציה.
+   - **strings.xml**: מכיל משאבי מחרוזת לאפליקציה.
+   - **themes.xml**: מגדיר את הנושא של האפליקציה.
+   - **themes.xml (night)**: מגדיר את הנושא של האפליקציה למצב לילה.
+
+## כיצד להפעיל
+
+1. **דרישות מקדימות**
+   - ודא שיש לך את Android Studio מותקן במחשב שלך.
+   - ודא שיש לך את ה-SDKs הנדרשים של אנדרואיד מותקנים.
+
+2. **הגדרות**
+   - שיבוט או הורדת הפרויקט למחשב המקומי שלך.
+   - פתח את הפרויקט ב-Android Studio.
+
+3. **בנה והפעל**
+   - חבר את מכשיר האנדרואיד שלך או הפעל אמולטור אנדרואיד.
+   - לחץ על כפתור ה-"Run" ב-Android Studio כדי לבנות ולפרוס את האפליקציה למכשיר/אמולטור שלך.
+
+## תכונות
+
+- **שליטת דמות**: נווט את הדמות באמצעות בקרות מגע.
+- **הימנעות ממכשולים**: הימנע ממכשולים שונים שמופיעים על המסך.
+- **בונוסים**: אסוף בונוסים כדי לקבל מגן.
+- **מוזיקת רקע**: תהנה ממוזיקת רקע במהלך המשחק.
+- **ממשק משתמש דינמי**: ממשק המשתמש מתעדכן דינמית בהתאם למצב המשחק.
