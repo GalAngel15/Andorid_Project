@@ -1,4 +1,4 @@
-### Game Project - Dragon Ball
+# Game Project - Dragon Ball
 
 ## Overview
 
@@ -58,8 +58,9 @@ The project is structured into several directories and files, each serving a spe
 - **Bonuses**: Collect bonuses to gain shield.
 - **Background Music**: Enjoy background music while playing the game.
 - **Dynamic UI**: The user interface updates dynamically based on the game state.
+- 
 
-  ### פרויקט משחק - דרגון בול
+ # פרויקט משחק - דרגון בול
 
 ## סקירה כללית
 
