@@ -323,6 +323,7 @@
             app:iconTint="@null"
             app:iconSize="30dp"
             app:iconGravity="start"
+            android:contentDescription="@string/left_arrow_desc"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -349,6 +350,7 @@
                 app:iconTint="@null"
                 app:iconSize="30dp"
                 app:iconGravity="top"
+                android:contentDescription="@string/up_arrow_desc"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
 
             <com.google.android.material.button.MaterialButton
@@ -361,6 +363,7 @@
                 app:iconTint="@null"
                 app:iconSize="30dp"
                 app:iconGravity="top"
+                android:contentDescription="@string/down_arrow_desc"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
         </LinearLayout>
 
@@ -374,6 +377,7 @@
             app:iconTint="@null"
             app:iconSize="30dp"
             app:iconGravity="end"
+            android:contentDescription="@string/right_arrow_desc"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

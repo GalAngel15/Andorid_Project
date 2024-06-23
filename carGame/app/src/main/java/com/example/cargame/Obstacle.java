@@ -3,6 +3,13 @@ package com.example.cargame;
 public class Obstacle {
     private int row;
     private int col;
+    private int imageResource;
+
+    public Obstacle(int row, int col, int imageResource) {
+        this.row = row;
+        this.col = col;
+        this.imageResource = imageResource;
+    }
 
     public int getImageResource() {
         return imageResource;
@@ -26,14 +33,6 @@ public class Obstacle {
 
     public void setRow(int row) {
         this.row = row;
-    }
-
-    private int imageResource;
-
-    public Obstacle(int row, int col, int imageResource) {
-        this.row = row;
-        this.col = col;
-        this.imageResource = imageResource;
     }
 
     public void moveDown() {

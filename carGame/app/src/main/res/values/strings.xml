@@ -2,4 +2,9 @@
     <string name="app_name">Dragon Ball</string>
     <string name="score_text">Score: %d</string>
     <string name="game_title">Dragon Ball</string>
+    <!--arrows-->
+    <string name="left_arrow_desc">Left Arrow</string>
+    <string name="right_arrow_desc">Right Arrow</string>
+    <string name="up_arrow_desc">Up Arrow</string>
+    <string name="down_arrow_desc">Down Arrow</string>
 </resources>
