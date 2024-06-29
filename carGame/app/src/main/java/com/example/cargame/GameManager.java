@@ -85,6 +85,7 @@ public class GameManager {
         uiManager.updateScore(ticks);
         obstacleManager.clearObstacles();
         character.resetPosition();
+
     }
 
     public void stopGame() {

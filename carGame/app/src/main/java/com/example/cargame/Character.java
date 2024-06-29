@@ -23,7 +23,7 @@ public class Character {
     }
 
     public void moveRight() {
-        if (positionCol < 2) {
+        if (positionCol < grid[0].length-1) {
             grid[positionRow][positionCol].setImageResource(0);
             positionCol++;
             updateCurrentImage();
@@ -39,7 +39,7 @@ public class Character {
     }
 
     public void moveDown() {
-        if (positionRow < 8) {
+        if (positionRow < grid.length-1) {
             grid[positionRow][positionCol].setImageResource(0);
             positionRow++;
             updateCurrentImage();
@@ -57,7 +57,7 @@ public class Character {
 
     public void resetPosition() {
         positionRow = 8;
-        positionCol = 1;
+        positionCol = 2;
         currentImageResource = R.drawable.goku;
         updateCurrentImage();
     }

@@ -19,7 +19,7 @@ public class ObstacleManager {
 
     public void addObstacle() {
         Random rand = new Random();
-        int lane = rand.nextInt(3);
+        int lane = rand.nextInt(grid[0].length);
         int obstacleImage = enemies[rand.nextInt(enemies.length)];
         grid[0][lane].setImageResource(obstacleImage);
         obstacles.add(new Obstacle(0, lane, obstacleImage));
@@ -27,7 +27,7 @@ public class ObstacleManager {
 
     public void addBonus() {
         Random rand = new Random();
-        int lane = rand.nextInt(3);
+        int lane = rand.nextInt(grid[0].length);
         grid[0][lane].setImageResource(bounusImg);
         obstacles.add(new Obstacle(0, lane, bounusImg));
     }
@@ -38,7 +38,7 @@ public class ObstacleManager {
             if (!character.checkCollision(obstacle.getRow(), obstacle.getCol())) {
                 grid[obstacle.getRow()][obstacle.getCol()].setImageResource(0);
             }
-            if (obstacle.getRow() < 8) {
+            if (obstacle.getRow() < (grid.length-1)) {
                 if (!character.checkCollision(obstacle.getRow() + 1, obstacle.getCol())) {
                     obstacle.moveDown();
                     grid[obstacle.getRow()][obstacle.getCol()].setImageResource(obstacle.getImageResource());
@@ -55,8 +55,8 @@ public class ObstacleManager {
     }
 
     public void clearObstacles() {
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
                 grid[i][j].setImageResource(0);
             }
         }

@@ -3,6 +3,7 @@ package com.example.cargame;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -51,7 +52,8 @@ public class UIManager {
                 })
                 .setNegativeButton("לא", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
+                        Intent i = new Intent(context.getApplicationContext(), ManuActivity.class);
+                        context.startActivity(i);
                     }
                 });
         builder.create().show();
