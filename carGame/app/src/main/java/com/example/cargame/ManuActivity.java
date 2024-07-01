@@ -25,12 +25,18 @@ public class ManuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_manu);
-        keyMode=getResources().getString(R.string.key_mode);
-        buttonsMode=getResources().getString(R.string.buttons_mode);
-        sensorsMode=getResources().getString(R.string.sensors_mode);
+        keyMode = getResources().getString(R.string.key_mode);
+        buttonsMode = getResources().getString(R.string.buttons_mode);
+        sensorsMode = getResources().getString(R.string.sensors_mode);
         initializeButtons();
         setListeners();
-        }
+    }
+
+    private void initializeButtons() {
+        buttonSensorsMode = findViewById(R.id.buttonSensorsMode);
+        buttonButtonsMode = findViewById(R.id.buttonButtonsMode);
+        buttonHighScores = findViewById(R.id.buttonHighScores);
+    }
 
     private void setListeners() {
         buttonSensorsMode.setOnClickListener(v -> {
@@ -46,16 +52,11 @@ public class ManuActivity extends AppCompatActivity {
             bundle.putString(keyMode, buttonsMode);
             i.putExtras(bundle);
             startActivity(i);
-            });
+        });
         buttonHighScores.setOnClickListener(v -> {
-//            Intent i = new Intent(getApplicationContext(), ScoresActivity.class);
-//            startActivity(i);
+            Intent i = new Intent(getApplicationContext(), ScoreActivity.class);
+            startActivity(i);
         });
     }
 
-    private void initializeButtons() {
-        buttonSensorsMode = findViewById(R.id.buttonSensorsMode);
-        buttonButtonsMode = findViewById(R.id.buttonButtonsMode);
-        buttonHighScores = findViewById(R.id.buttonHighScores);
-    }
 }

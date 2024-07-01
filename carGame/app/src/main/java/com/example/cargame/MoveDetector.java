@@ -5,6 +5,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.util.Log;
 
 public class MoveDetector {
 
@@ -13,8 +14,12 @@ public class MoveDetector {
     private SensorEventListener sensorEventListener;
 
     private Context context;
-    private Character character;
+    private final Character character;
     private GameManager gameManager;
+    private long timestamp = 0l;
+    private float startPosition[] = {0,0};
+    private boolean gameStarted =false;
+
 
     // סף תזוזה לתנועה
     private static final float MOVE_THRESHOLD = 2.0f;
@@ -27,26 +32,42 @@ public class MoveDetector {
         sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         if (sensorManager != null) {
             sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+            Log.d("MoveDetector1", "Sensor started1");
         }
         initEventListener();
     }
 
     private void initEventListener() {
+        Log.d("MoveDetector1", "Sensor started2");
         this.sensorEventListener=new SensorEventListener() {
             @Override
             public void onSensorChanged(SensorEvent event) { //initEventListener in Tom's example
                 float x = event.values[0];
                 float y = event.values[1];
-
-                if (x > MOVE_THRESHOLD) {
+                if(!gameStarted) {
+                    startPosition[0]=x;
+                    startPosition[1]=y;
+                    gameStarted =true;
+                }
+                Log.d("MoveDetector1", "Sensor started4");
+//                if (System.currentTimeMillis() - timestamp > 500){
+//                    timestamp = System.currentTimeMillis();
+//                    if (x > 6.0 || x < -6.0){
+//                        character.moveRight();
+//                    }
+//                    if (y > 6.0 || y < -6.0){
+//                        character.moveUp();
+//                    }
+//                }
+                if (x > startPosition[0]+6.0) {
                     character.moveLeft();
-                } else if (x < -MOVE_THRESHOLD) {
+                } else if (x < -(startPosition[0]+6.0)) {
                     character.moveRight();
                 }
 
-                if (y > SPEED_THRESHOLD) {
+                if (y > startPosition[1]+6.0) {
                     character.moveUp();
-                } else if (y < -SPEED_THRESHOLD) {
+                } else if (y < -(startPosition[1]+6.0)) {
                     character.moveDown();
                 }
             }
@@ -58,18 +79,27 @@ public class MoveDetector {
         };
     }
 
-    public void start(){
-        sensorManager.registerListener(
-                sensorEventListener,
-                sensor,
-                SensorManager.SENSOR_DELAY_NORMAL
-        );
+    public void start() {
+        if (sensor != null) {
+            sensorManager.registerListener(
+                    sensorEventListener,
+                    sensor,
+                    SensorManager.SENSOR_DELAY_NORMAL
+            );
+            Log.d("MoveDetector0", "Sensor started");
+        } else {
+            Log.e("MoveDetector", "Sensor not available");
+        }
     }
 
-    public void stop(){
-        sensorManager.unregisterListener(
-                sensorEventListener,
-                sensor
-        );
+    public void stop() {
+        if (sensor != null) {
+            sensorManager.unregisterListener(
+                    sensorEventListener,
+                    sensor
+            );
+            gameStarted =false;
+            Log.d("MoveDetector", "Sensor stopped");
+        }
     }
 }

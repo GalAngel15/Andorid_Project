@@ -20,6 +20,7 @@ public class GameManager {
     private final ObstacleManager obstacleManager;
     private final MusicManager music;
     private final Vibrator vibrator;
+    private HighScoreManager scoreManager;
 
     public GameManager(Context context, UIManager uiManager, Character character, ObstacleManager obstacleManager, MusicManager music) {
         this.context = context;
@@ -28,6 +29,7 @@ public class GameManager {
         this.obstacleManager = obstacleManager;
         this.music = music;
         this.vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+        scoreManager=new HighScoreManager(context);
     }
 
     public void startGame() {
@@ -67,9 +69,7 @@ public class GameManager {
             if (lives <= 0) {
                 gameOver = true;
                 Toast.makeText(context, "Game Over!", Toast.LENGTH_SHORT).show();
-                handler.removeCallbacksAndMessages(null);
-                music.stopMusic();
-                uiManager.showStartGameDialog(this);
+                playerLost();
             } else {
                 Toast.makeText(context, "Crash!", Toast.LENGTH_SHORT).show();
             }
@@ -96,5 +96,11 @@ public class GameManager {
         if (vibrator != null) {
             vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
         }
+    }
+    private void playerLost(){
+        handler.removeCallbacksAndMessages(null);
+        music.stopMusic();
+        scoreManager.addScore(ticks, "gal");
+        uiManager.showStartGameDialog(this);
     }
 }

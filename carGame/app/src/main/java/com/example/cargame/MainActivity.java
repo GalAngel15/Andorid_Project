@@ -2,6 +2,7 @@ package com.example.cargame;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,8 +24,6 @@ public class MainActivity extends AppCompatActivity {
     private MusicManager music;
     private MoveDetector moveDetector;
     private String mode;
-    private String keyMode;
-    private String buttonsMode;
     private String sensorsMode;
 
     @Override
@@ -38,8 +37,8 @@ public class MainActivity extends AppCompatActivity {
         obstacleManager = new ObstacleManager(grid);
         music = new MusicManager(this, R.raw.background_music);
         gameManager = new GameManager(this, uiManager, character, obstacleManager, music);
-        keyMode=getResources().getString(R.string.key_mode);
-        buttonsMode=getResources().getString(R.string.buttons_mode);
+        String keyMode = getResources().getString(R.string.key_mode);
+        String buttonsMode = getResources().getString(R.string.buttons_mode);
         sensorsMode=getResources().getString(R.string.sensors_mode);
         setMode();
         if (mode.equals(buttonsMode)) {
@@ -84,9 +83,33 @@ public class MainActivity extends AppCompatActivity {
                 {findViewById(R.id.grid_item_8_0), findViewById(R.id.grid_item_8_1), findViewById(R.id.grid_item_8_2), findViewById(R.id.grid_item_8_3), findViewById(R.id.grid_item_8_4)}
         };
     }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        gameManager.stopGame();
+        if(moveDetector!=null)
+            moveDetector.stop();
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mode.equals(sensorsMode))
+            moveDetector.start();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        gameManager.stopGame();
+        if(moveDetector!=null)
+            moveDetector.stop();
+    }
+
     protected void onDestroy() {
         super.onDestroy();
         // Release MediaPlayer when the activity is destroyed
         gameManager.stopGame();
+        if(moveDetector!=null)
+            moveDetector.stop();
     }
 }
