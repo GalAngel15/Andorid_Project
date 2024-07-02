@@ -17,8 +17,8 @@ public class MoveDetector {
     private final Character character;
     private GameManager gameManager;
     private long timestamp = 0l;
-    private float startPosition[] = {0,0};
-    private boolean gameStarted =false;
+    private float startPosition[] = {0, 0};
+    private boolean gameStarted = false;
 
 
     // סף תזוזה לתנועה
@@ -34,20 +34,21 @@ public class MoveDetector {
             sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
             Log.d("MoveDetector1", "Sensor started1");
         }
+        gameStarted = false;
         initEventListener();
     }
 
     private void initEventListener() {
         Log.d("MoveDetector1", "Sensor started2");
-        this.sensorEventListener=new SensorEventListener() {
+        this.sensorEventListener = new SensorEventListener() {
             @Override
             public void onSensorChanged(SensorEvent event) { //initEventListener in Tom's example
                 float x = event.values[0];
-                float y = event.values[1];
-                if(!gameStarted) {
-                    startPosition[0]=x;
-                    startPosition[1]=y;
-                    gameStarted =true;
+                float z = event.values[2];
+                if (!gameStarted) {
+                    startPosition[0] = x;
+                    startPosition[1] = z;
+                    gameStarted = true;
                 }
                 Log.d("MoveDetector1", "Sensor started4");
 //                if (System.currentTimeMillis() - timestamp > 500){
@@ -59,15 +60,15 @@ public class MoveDetector {
 //                        character.moveUp();
 //                    }
 //                }
-                if (x > startPosition[0]+6.0) {
+                if (x > startPosition[0] + 6.0) {
                     character.moveLeft();
-                } else if (x < -(startPosition[0]+6.0)) {
+                } else if (x < -(startPosition[0] + 6.0)) {
                     character.moveRight();
                 }
 
-                if (y > startPosition[1]+6.0) {
+                if (z > startPosition[1] + 6.0) {
                     character.moveUp();
-                } else if (y < -(startPosition[1]+6.0)) {
+                } else if (z < -(startPosition[1] + 6.0)) {
                     character.moveDown();
                 }
             }
@@ -98,7 +99,7 @@ public class MoveDetector {
                     sensorEventListener,
                     sensor
             );
-            gameStarted =false;
+            gameStarted = false;
             Log.d("MoveDetector", "Sensor stopped");
         }
     }

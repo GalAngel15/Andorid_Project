@@ -2,10 +2,7 @@ package com.example.cargame;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,8 +10,8 @@ import com.google.android.material.button.MaterialButton;
 
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity {
 
+public class MainActivity extends AppCompatActivity {
     private ImageView[][] grid;
     private Character character;
     private GameManager gameManager;
@@ -39,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         gameManager = new GameManager(this, uiManager, character, obstacleManager, music);
         String keyMode = getResources().getString(R.string.key_mode);
         String buttonsMode = getResources().getString(R.string.buttons_mode);
-        sensorsMode=getResources().getString(R.string.sensors_mode);
+        sensorsMode = getResources().getString(R.string.sensors_mode);
         setMode();
         if (mode.equals(buttonsMode)) {
             initializeButtons();
@@ -55,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setMode() {
         Intent prev = getIntent();
-        mode= Objects.requireNonNull(prev.getExtras()).getString("mode");
+        mode = Objects.requireNonNull(prev.getExtras()).getString("mode");
     }
 
     private void initializeButtons() {
@@ -72,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeGrid() {
         grid = new ImageView[][]{
-                {findViewById(R.id.grid_item_0_0), findViewById(R.id.grid_item_0_1), findViewById(R.id.grid_item_0_2), findViewById(R.id.grid_item_0_3),findViewById(R.id.grid_item_0_4)},
+                {findViewById(R.id.grid_item_0_0), findViewById(R.id.grid_item_0_1), findViewById(R.id.grid_item_0_2), findViewById(R.id.grid_item_0_3), findViewById(R.id.grid_item_0_4)},
                 {findViewById(R.id.grid_item_1_0), findViewById(R.id.grid_item_1_1), findViewById(R.id.grid_item_1_2), findViewById(R.id.grid_item_1_3), findViewById(R.id.grid_item_1_4)},
                 {findViewById(R.id.grid_item_2_0), findViewById(R.id.grid_item_2_1), findViewById(R.id.grid_item_2_2), findViewById(R.id.grid_item_2_3), findViewById(R.id.grid_item_2_4)},
                 {findViewById(R.id.grid_item_3_0), findViewById(R.id.grid_item_3_1), findViewById(R.id.grid_item_3_2), findViewById(R.id.grid_item_3_3), findViewById(R.id.grid_item_3_4)},
@@ -83,13 +80,15 @@ public class MainActivity extends AppCompatActivity {
                 {findViewById(R.id.grid_item_8_0), findViewById(R.id.grid_item_8_1), findViewById(R.id.grid_item_8_2), findViewById(R.id.grid_item_8_3), findViewById(R.id.grid_item_8_4)}
         };
     }
+
     @Override
     protected void onStop() {
         super.onStop();
         gameManager.stopGame();
-        if(moveDetector!=null)
+        if (moveDetector != null)
             moveDetector.stop();
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -101,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         gameManager.stopGame();
-        if(moveDetector!=null)
+        if (moveDetector != null)
             moveDetector.stop();
     }
 
@@ -109,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         // Release MediaPlayer when the activity is destroyed
         gameManager.stopGame();
-        if(moveDetector!=null)
+        if (moveDetector != null)
             moveDetector.stop();
     }
 }

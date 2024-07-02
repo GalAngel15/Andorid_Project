@@ -100,7 +100,7 @@ public class GameManager {
     private void playerLost(){
         handler.removeCallbacksAndMessages(null);
         music.stopMusic();
-        scoreManager.addScore(ticks, "gal");
+        scoreManager.saveHighScore("gal",ticks, 0 ,0);
         uiManager.showStartGameDialog(this);
     }
 }
