@@ -2,4 +2,10 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="game_area_background">#80000000</color>
+    <color name="control_area_background">#40000000</color>
+    <color name="background_color">#FAFAFA</color>
+    <color name="primary">#6200EE</color>
+    <color name="on_primary">#FFFFFF</color>
+    <color name="primary_text">#FFD700</color>
 </resources>

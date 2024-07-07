@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity"
-    android:background="@drawable/dbz_background"
+    tools:context=".activities.MainActivity"
+    android:background="@drawable/main_activity_background"
     android:keepScreenOn="true"
     >
 
@@ -85,7 +85,7 @@
         android:layout_height="0dp"
         android:layout_weight="18"
         android:orientation="vertical"
-        android:background="#80000000">
+        android:background="@color/game_area_background">
 
         <!-- Create 9/3 grid  -->
         <!-- Row 1 -->
@@ -406,7 +406,7 @@
         android:id="@+id/control_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#40000000"
+        android:background="@color/control_area_background"
         android:layoutDirection="ltr">
 
         <com.google.android.material.button.MaterialButton

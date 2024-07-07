@@ -23,10 +23,10 @@
             android:value="@string/my_map_api_key"/>
 
         <activity
-            android:name=".ScoreActivity"
+            android:name=".activities.ScoreActivity"
             android:exported="false" />
         <activity
-            android:name=".ManuActivity"
+            android:name=".activities.ManuActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,7 +34,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:exported="false">
         </activity>
     </application>
