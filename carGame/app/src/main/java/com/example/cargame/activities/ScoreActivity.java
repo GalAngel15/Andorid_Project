@@ -133,6 +133,9 @@ public class ScoreActivity extends AppCompatActivity implements OnMapReadyCallba
                 }
             });
         }
+        for (int i = highScores.size(); i < rows.length; i++) {
+            rows[i].setVisibility(View.GONE);
+        }
     }
 
     private void showPlayerLocationOnMap(String playerName) {

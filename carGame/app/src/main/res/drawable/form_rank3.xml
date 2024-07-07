@@ -1,0 +1,6 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="#CD7F32"/> <!-- צבע רקע ברונזה -->
+    <stroke android:width="2dp" android:color="#000000"/> <!-- מסגרת שחורה -->
+    <corners android:radius="4dp"/>
+</shape>

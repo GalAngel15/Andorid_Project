@@ -7,6 +7,14 @@
     android:layout_height="match_parent"
     tools:context=".activities.ScoreActivity">
 
+    <ImageView
+        android:id="@+id/background_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/home_background"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true" />
+
     <LinearLayout
         android:id="@+id/scoresContainer"
         android:layout_width="match_parent"
@@ -86,14 +94,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:visibility="invisible">
+                android:visibility="visible">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     android:layout_weight="1"
-                    android:background="@android:color/darker_gray"
+                    android:background="@drawable/form_rank1"
                     android:gravity="center"
                     android:padding="4dp"
                     android:text="1"
@@ -105,7 +113,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     android:layout_weight="3"
-                    android:background="@android:color/darker_gray"
+                    android:background="@drawable/form_rank1"
                     android:gravity="center"
                     android:padding="4dp"
                     android:text="Player 1"
@@ -117,7 +125,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     android:layout_weight="2"
-                    android:background="@android:color/darker_gray"
+                    android:background="@drawable/form_rank1"
                     android:gravity="center"
                     android:padding="4dp"
                     android:text="1000"
@@ -129,14 +137,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:visibility="invisible">
+                android:visibility="visible">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     android:layout_weight="1"
-                    android:background="@android:color/darker_gray"
+                    android:background="@drawable/form_rank2"
                     android:gravity="center"
                     android:padding="4dp"
                     android:text="2"
@@ -148,7 +156,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     android:layout_weight="3"
-                    android:background="@android:color/darker_gray"
+                    android:background="@drawable/form_rank2"
                     android:gravity="center"
                     android:padding="4dp"
                     android:text="Player 2"
@@ -160,7 +168,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     android:layout_weight="2"
-                    android:background="@android:color/darker_gray"
+                    android:background="@drawable/form_rank2"
                     android:gravity="center"
                     android:padding="4dp"
                     android:text="900"
@@ -172,13 +180,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:visibility="invisible">
+                android:visibility="visible">
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     android:layout_weight="1"
-                    android:background="@android:color/darker_gray"
+                    android:background="@drawable/form_rank3"
                     android:gravity="center"
                     android:padding="4dp"
                     android:text="3"
@@ -190,7 +198,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     android:layout_weight="3"
-                    android:background="@android:color/darker_gray"
+                    android:background="@drawable/form_rank3"
                     android:gravity="center"
                     android:padding="4dp"
                     android:text="Player 3"
@@ -202,7 +210,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     android:layout_weight="2"
-                    android:background="@android:color/darker_gray"
+                    android:background="@drawable/form_rank3"
                     android:gravity="center"
                     android:padding="4dp"
                     android:text="800"
@@ -214,14 +222,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:visibility="invisible">
+                android:visibility="visible">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     android:layout_weight="1"
-                    android:background="@android:color/darker_gray"
+                    android:background="@drawable/form_top10"
                     android:gravity="center"
                     android:padding="4dp"
                     android:text="4"
@@ -233,7 +241,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     android:layout_weight="3"
-                    android:background="@android:color/darker_gray"
+                    android:background="@drawable/form_top10"
                     android:gravity="center"
                     android:padding="4dp"
                     android:text="Player 4"
@@ -245,7 +253,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     android:layout_weight="2"
-                    android:background="@android:color/darker_gray"
+                    android:background="@drawable/form_top10"
                     android:gravity="center"
                     android:padding="4dp"
                     android:text="700"
@@ -257,14 +265,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:visibility="invisible">
+                android:visibility="visible">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     android:layout_weight="1"
-                    android:background="@android:color/darker_gray"
+                    android:background="@drawable/form_top10"
                     android:gravity="center"
                     android:padding="4dp"
                     android:text="5"
@@ -276,7 +284,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     android:layout_weight="3"
-                    android:background="@android:color/darker_gray"
+                    android:background="@drawable/form_top10"
                     android:gravity="center"
                     android:padding="4dp"
                     android:text="Player 5"
@@ -288,7 +296,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     android:layout_weight="2"
-                    android:background="@android:color/darker_gray"
+                    android:background="@drawable/form_top10"
                     android:gravity="center"
                     android:padding="4dp"
                     android:text="600"
@@ -300,14 +308,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:visibility="invisible">
+                android:visibility="visible">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     android:layout_weight="1"
-                    android:background="@android:color/darker_gray"
+                    android:background="@drawable/form_top10"
                     android:gravity="center"
                     android:padding="4dp"
                     android:text="6"
@@ -319,7 +327,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     android:layout_weight="3"
-                    android:background="@android:color/darker_gray"
+                    android:background="@drawable/form_top10"
                     android:gravity="center"
                     android:padding="4dp"
                     android:text="Player 6"
@@ -331,7 +339,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     android:layout_weight="2"
-                    android:background="@android:color/darker_gray"
+                    android:background="@drawable/form_top10"
                     android:gravity="center"
                     android:padding="4dp"
                     android:text="500"
@@ -343,14 +351,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:visibility="invisible">
+                android:visibility="visible">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     android:layout_weight="1"
-                    android:background="@android:color/darker_gray"
+                    android:background="@drawable/form_top10"
                     android:gravity="center"
                     android:padding="4dp"
                     android:text="7"
@@ -362,7 +370,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     android:layout_weight="3"
-                    android:background="@android:color/darker_gray"
+                    android:background="@drawable/form_top10"
                     android:gravity="center"
                     android:padding="4dp"
                     android:text="Player 7"
@@ -374,7 +382,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     android:layout_weight="2"
-                    android:background="@android:color/darker_gray"
+                    android:background="@drawable/form_top10"
                     android:gravity="center"
                     android:padding="4dp"
                     android:text="400"
@@ -386,14 +394,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:visibility="invisible">
+                android:visibility="visible">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     android:layout_weight="1"
-                    android:background="@android:color/darker_gray"
+                    android:background="@drawable/form_top10"
                     android:gravity="center"
                     android:padding="4dp"
                     android:text="8"
@@ -405,7 +413,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     android:layout_weight="3"
-                    android:background="@android:color/darker_gray"
+                    android:background="@drawable/form_top10"
                     android:gravity="center"
                     android:padding="4dp"
                     android:text="Player 8"
@@ -417,7 +425,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     android:layout_weight="2"
-                    android:background="@android:color/darker_gray"
+                    android:background="@drawable/form_top10"
                     android:gravity="center"
                     android:padding="4dp"
                     android:text="300"
@@ -429,14 +437,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:visibility="invisible">
+                android:visibility="visible">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     android:layout_weight="1"
-                    android:background="@android:color/darker_gray"
+                    android:background="@drawable/form_top10"
                     android:gravity="center"
                     android:padding="4dp"
                     android:text="9"
@@ -448,7 +456,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     android:layout_weight="3"
-                    android:background="@android:color/darker_gray"
+                    android:background="@drawable/form_top10"
                     android:gravity="center"
                     android:padding="4dp"
                     android:text="Player 9"
@@ -460,7 +468,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     android:layout_weight="2"
-                    android:background="@android:color/darker_gray"
+                    android:background="@drawable/form_top10"
                     android:gravity="center"
                     android:padding="4dp"
                     android:text="200"
@@ -472,14 +480,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:visibility="invisible">
+                android:visibility="visible">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     android:layout_weight="1"
-                    android:background="@android:color/darker_gray"
+                    android:background="@drawable/form_top10"
                     android:gravity="center"
                     android:padding="4dp"
                     android:text="10"
@@ -491,7 +499,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     android:layout_weight="3"
-                    android:background="@android:color/darker_gray"
+                    android:background="@drawable/form_top10"
                     android:gravity="center"
                     android:padding="4dp"
                     android:text="Player 10"
@@ -503,12 +511,13 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     android:layout_weight="2"
-                    android:background="@android:color/darker_gray"
+                    android:background="@drawable/form_top10"
                     android:gravity="center"
                     android:padding="4dp"
                     android:text="100"
                     android:textColor="@android:color/black" />
             </LinearLayout>
+
 
         </LinearLayout>
 
