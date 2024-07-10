@@ -28,6 +28,7 @@ public class GameManager implements PlayerNameCallback {
     private final Vibrator vibrator;
     private HighScoreManager scoreManager;
     private Location currentLocation;
+    private final Handler difficultyHandler = new Handler();
 
     public GameManager(Context context, UIManager uiManager, Character character, ObstacleManager obstacleManager) {
         this.context = context;
@@ -49,26 +50,35 @@ public class GameManager implements PlayerNameCallback {
         gameOver = false;
         music.startMusic(true);
         resetGame();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (gameOver) return;
-                uiManager.updateScore(ticks);
-                obstacleManager.moveAllObstaclesDown(character, GameManager.this);
-                ticks++;
-                if (ticks % 2 == 0) {
-                    obstacleManager.addObstacle();
-                } else if (ticks % 7 == 0) {
-                    obstacleManager.addBonus();
-                }
-                if (ticks % 10 == 0) {
-                    dummyTimer = dummyTimer * 0.9;
-                    delayTimer = (long) dummyTimer;
-                }
-                handler.postDelayed(this, delayTimer);
-            }
-        }, delayTimer);
+        handler.postDelayed(gameRunnable, delayTimer);
+        difficultyHandler.postDelayed(difficultyRunnable, 10000);
     }
+
+    private final Runnable gameRunnable= new Runnable() {
+        @Override
+        public void run() {
+            if (gameOver) return;
+            uiManager.updateScore(ticks);
+            obstacleManager.moveAllObstaclesDown(character, GameManager.this);
+            ticks++;
+            if (ticks % 2 == 0) {
+                obstacleManager.addObstacle();
+            } else if (ticks % 7 == 0) {
+                obstacleManager.addBonus();
+            }
+            handler.postDelayed(this, delayTimer);
+        }
+    };
+
+    private final Runnable difficultyRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (gameOver) return;
+            dummyTimer = dummyTimer * 0.9;
+            delayTimer = (long) dummyTimer;
+            difficultyHandler.postDelayed(this, 10000); // קביעת תזמון חדש לעוד 10 שניות
+        }
+    };
 
     public void onCollision(int obstacleImage) {
         if (obstacleImage == R.drawable.bonus) {
@@ -115,6 +125,7 @@ public class GameManager implements PlayerNameCallback {
 
     private void playerLost() {
         handler.removeCallbacksAndMessages(null);
+        difficultyHandler.removeCallbacksAndMessages(null);
         music.stopMusic();
         uiManager.showPlayerNameDialog(this);
     }

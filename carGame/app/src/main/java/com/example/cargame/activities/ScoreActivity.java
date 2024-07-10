@@ -33,7 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ScoreActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class ScoreActivity extends BaseActivity  implements OnMapReadyCallback {
     private HighScoreManager highScoreManager;
     private Button buttonBack;
     private LinearLayout[] rows;
@@ -154,4 +154,28 @@ public class ScoreActivity extends AppCompatActivity implements OnMapReadyCallba
             startActivity(i);
         });
     }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // קוד לביצוע כאשר הפעילות נעצרת באופן זמני
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // קוד לביצוע כאשר הפעילות מתחדשת לאחר שנעצרה
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // קוד לביצוע כאשר הפעילות נעצרת
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // קוד לביצוע כאשר הפעילות נהרסת
+    }
+
 }

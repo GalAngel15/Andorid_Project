@@ -27,7 +27,7 @@ import com.google.android.material.button.MaterialButton;
 
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity  {
     private ImageView[][] grid;
     private Character character;
     private GameManager gameManager;

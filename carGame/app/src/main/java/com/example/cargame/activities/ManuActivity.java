@@ -4,6 +4,9 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.View;
+import android.view.WindowInsets;
+import android.view.WindowInsetsController;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -14,7 +17,7 @@ import androidx.core.app.ActivityCompat;
 
 import com.example.cargame.R;
 
-public class ManuActivity extends AppCompatActivity {
+public class ManuActivity extends BaseActivity  {
 
     private Button buttonSensorsMode;
     private Button buttonButtonsMode;
@@ -34,12 +37,6 @@ public class ManuActivity extends AppCompatActivity {
         sensorsMode = getResources().getString(R.string.sensors_mode);
         initializeButtons();
         setListeners();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        checkLocationAccess();
     }
 
     private void checkLocationAccess() {
@@ -82,8 +79,29 @@ public class ManuActivity extends AppCompatActivity {
         if (requestCode == FINE_PERMISSION_CODE) {
             if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(this, "Location permission is required for this app to work.", Toast.LENGTH_SHORT).show();
-                // ניתן להוסיף התנהגות נוספת אם ההרשאה נדחתה
             }
         }
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkLocationAccess();
+    }
+    
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
 }
