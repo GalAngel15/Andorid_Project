@@ -1,22 +1,16 @@
 package com.example.cargame.activities;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.Manifest;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
 import com.example.cargame.R;
 import com.example.cargame.managers.HighScoreManager;
+import com.example.cargame.managers.LocationManager;
 import com.example.cargame.models.Player;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -26,23 +20,21 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ScoreActivity extends BaseActivity  implements OnMapReadyCallback {
+public class ScoreActivity extends BaseActivity implements OnMapReadyCallback {
     private HighScoreManager highScoreManager;
     private Button buttonBack;
     private LinearLayout[] rows;
     private TextView[] scores;
     private TextView[] names;
-    private final int FINE_PREMISSION_CODE = 1;
     private GoogleMap myMap;
     Location currentLocation;
     FusedLocationProviderClient fusedLocationProviderClient;
+    private LocationManager locationManager;
     private Map<String, LatLng> playerLocations = new HashMap<>();
 
     @Override
@@ -51,39 +43,22 @@ public class ScoreActivity extends BaseActivity  implements OnMapReadyCallback {
         setContentView(R.layout.activity_score);
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        locationManager = new LocationManager(this, fusedLocationProviderClient);
 
-        // לבדוק אם ההרשאות ניתנו ולהשיג את המיקום אם כן
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            getLastLocation();
-        } else {
-            // ניתן להחליט מה לעשות אם אין הרשאות, כמו להמשיך בלי להשתמש במיקום
-            Toast.makeText(this, "Location permissions not granted", Toast.LENGTH_SHORT).show();
-        }
+        locationManager.checkLocationAccess();
+        locationManager.getLastLocation(location -> {
+            if (location != null) {
+                currentLocation = location;
+
+                SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+                mapFragment.getMapAsync(ScoreActivity.this);
+            }
+        });
 
         highScoreManager = new HighScoreManager(this);
         initBoard();
         displayHighScores();
         initBtnBack();
-    }
-
-    private void getLastLocation() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-            return;
-        }
-        Task<Location> task = fusedLocationProviderClient.getLastLocation();
-        task.addOnSuccessListener(new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                if (location != null) {
-                    currentLocation = location;
-
-                    SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-                    mapFragment.getMapAsync(ScoreActivity.this);
-                }
-            }
-        });
     }
 
     @Override
@@ -154,28 +129,30 @@ public class ScoreActivity extends BaseActivity  implements OnMapReadyCallback {
             startActivity(i);
         });
     }
+
     @Override
     protected void onPause() {
         super.onPause();
-        // קוד לביצוע כאשר הפעילות נעצרת באופן זמני
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        // קוד לביצוע כאשר הפעילות מתחדשת לאחר שנעצרה
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        // קוד לביצוע כאשר הפעילות נעצרת
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // קוד לביצוע כאשר הפעילות נהרסת
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        locationManager.onRequestPermissionsResult(requestCode, grantResults);
+    }
 }

@@ -1,33 +1,24 @@
 package com.example.cargame.activities;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.ActivityCompat;
-
-import com.example.cargame.sensors.MoveDetector;
 import com.example.cargame.R;
-import com.example.cargame.managers.UIManager;
 import com.example.cargame.managers.GameManager;
+import com.example.cargame.managers.LocationManager;
 import com.example.cargame.managers.ObstacleManager;
+import com.example.cargame.managers.UIManager;
 import com.example.cargame.models.Character;
+import com.example.cargame.sensors.MoveDetector;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
-
 import java.util.Objects;
 
-public class MainActivity extends BaseActivity  {
+public class MainActivity extends BaseActivity {
     private ImageView[][] grid;
     private Character character;
     private GameManager gameManager;
@@ -39,8 +30,7 @@ public class MainActivity extends BaseActivity  {
     private String sensorsMode;
 
     private FusedLocationProviderClient fusedLocationProviderClient;
-    private Location currentLocation;
-    private final int FINE_PREMISSION_CODE = 1;
+    private LocationManager locationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,14 +38,16 @@ public class MainActivity extends BaseActivity  {
         setContentView(R.layout.activity_main);
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        getLastLocation();
+        locationManager = new LocationManager(this, fusedLocationProviderClient);
+
+        locationManager.checkLocationAccess();
 
         initializeGrid();
         uiManager = new UIManager(this);
         character = new Character(grid);
         obstacleManager = new ObstacleManager(grid);
         gameManager = new GameManager(this, uiManager, character, obstacleManager);
-        gameManager.setCurrentLocation(currentLocation); // Set the current location in the game manager
+        gameManager.setLocationManager(locationManager); // Set the current location in the game manager
 
         String keyMode = getResources().getString(R.string.key_mode);
         String buttonsMode = getResources().getString(R.string.buttons_mode);
@@ -65,29 +57,11 @@ public class MainActivity extends BaseActivity  {
             initializeButtons();
         } else if (mode.equals(sensorsMode)) {
             ConstraintLayout control = findViewById(R.id.control_layout);
-            control.setVisibility(View.GONE); // לשנות ל-GONE במקום INVISIBLE
+            control.setVisibility(View.GONE);
             initializeSensors();
         }
         uiManager.statGame(gameManager);
     }
-
-    private void getLastLocation() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(this, "Location permissions not granted", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        Task<Location> task = fusedLocationProviderClient.getLastLocation();
-        task.addOnSuccessListener(new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                if (location != null) {
-                    currentLocation = location;
-                    gameManager.setCurrentLocation(currentLocation); // Update the location in the game manager
-                }
-            }
-        });
-    }
-
 
     private void initializeSensors() {
         moveDetector = new MoveDetector(this, character, gameManager);
@@ -153,5 +127,11 @@ public class MainActivity extends BaseActivity  {
         gameManager.stopGame();
         if (moveDetector != null)
             moveDetector.stop();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        locationManager.onRequestPermissionsResult(requestCode, grantResults);
     }
 }

@@ -29,6 +29,7 @@ public class GameManager implements PlayerNameCallback {
     private HighScoreManager scoreManager;
     private Location currentLocation;
     private final Handler difficultyHandler = new Handler();
+    private LocationManager locationManager;
 
     public GameManager(Context context, UIManager uiManager, Character character, ObstacleManager obstacleManager) {
         this.context = context;
@@ -42,11 +43,28 @@ public class GameManager implements PlayerNameCallback {
         collisionSound= new MusicManager(context, R.raw.ouchsound);
     }
 
+    public void setLocationManager(LocationManager locationManager) {
+        this.locationManager = locationManager;
+    }
+
     public void setCurrentLocation(Location location) {
         this.currentLocation = location;
     }
 
     public void startGame() {
+        if (locationManager != null) {
+            locationManager.getLastLocation(location -> {
+                if (location != null) {
+                    currentLocation = location;
+                    startGameInternal();
+                }
+            });
+        } else {
+            startGameInternal();
+        }
+    }
+
+    private void startGameInternal() {
         gameOver = false;
         music.startMusic(true);
         resetGame();

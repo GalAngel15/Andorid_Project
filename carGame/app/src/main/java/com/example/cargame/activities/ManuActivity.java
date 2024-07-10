@@ -1,23 +1,20 @@
 package com.example.cargame.activities;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.view.View;
-import android.view.WindowInsets;
-import android.view.WindowInsetsController;
 import android.widget.Button;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.example.cargame.R;
+import com.example.cargame.managers.LocationManager;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 
-public class ManuActivity extends BaseActivity  {
+public class ManuActivity extends BaseActivity {
 
     private Button buttonSensorsMode;
     private Button buttonButtonsMode;
@@ -25,25 +22,23 @@ public class ManuActivity extends BaseActivity  {
     private String keyMode;
     private String buttonsMode;
     private String sensorsMode;
-    private static final int FINE_PERMISSION_CODE = 1;
+    private LocationManager locationManager;
+    private FusedLocationProviderClient fusedLocationProviderClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_manu);
         keyMode = getResources().getString(R.string.key_mode);
         buttonsMode = getResources().getString(R.string.buttons_mode);
         sensorsMode = getResources().getString(R.string.sensors_mode);
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        locationManager = new LocationManager(this, fusedLocationProviderClient);
+        locationManager.checkLocationAccess();
+
         initializeButtons();
         setListeners();
-    }
-
-    private void checkLocationAccess() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, FINE_PERMISSION_CODE);
-        }
     }
 
     private void initializeButtons() {
@@ -76,19 +71,15 @@ public class ManuActivity extends BaseActivity  {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == FINE_PERMISSION_CODE) {
-            if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "Location permission is required for this app to work.", Toast.LENGTH_SHORT).show();
-            }
-        }
+        locationManager.onRequestPermissionsResult(requestCode, grantResults);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        checkLocationAccess();
+        locationManager.checkLocationAccess();
     }
-    
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -103,5 +94,4 @@ public class ManuActivity extends BaseActivity  {
     protected void onDestroy() {
         super.onDestroy();
     }
-
 }
