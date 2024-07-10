@@ -94,7 +94,8 @@ public class MainActivity extends BaseActivity {
                 {findViewById(R.id.grid_item_5_0), findViewById(R.id.grid_item_5_1), findViewById(R.id.grid_item_5_2), findViewById(R.id.grid_item_5_3), findViewById(R.id.grid_item_5_4)},
                 {findViewById(R.id.grid_item_6_0), findViewById(R.id.grid_item_6_1), findViewById(R.id.grid_item_6_2), findViewById(R.id.grid_item_6_3), findViewById(R.id.grid_item_6_4)},
                 {findViewById(R.id.grid_item_7_0), findViewById(R.id.grid_item_7_1), findViewById(R.id.grid_item_7_2), findViewById(R.id.grid_item_7_3), findViewById(R.id.grid_item_7_4)},
-                {findViewById(R.id.grid_item_8_0), findViewById(R.id.grid_item_8_1), findViewById(R.id.grid_item_8_2), findViewById(R.id.grid_item_8_3), findViewById(R.id.grid_item_8_4)}
+                {findViewById(R.id.grid_item_8_0), findViewById(R.id.grid_item_8_1), findViewById(R.id.grid_item_8_2), findViewById(R.id.grid_item_8_3), findViewById(R.id.grid_item_8_4)},
+                {findViewById(R.id.grid_item_9_0), findViewById(R.id.grid_item_9_1), findViewById(R.id.grid_item_9_2), findViewById(R.id.grid_item_9_3), findViewById(R.id.grid_item_9_4)}
         };
     }
 

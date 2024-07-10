@@ -58,8 +58,8 @@ public class Character {
     }
 
     public void resetPosition() {
-        positionRow = 8;
-        positionCol = 2;
+        positionRow = grid.length-1;
+        positionCol = grid[0].length/2;
         currentImageResource = R.drawable.goku;
         updateCurrentImage();
     }
