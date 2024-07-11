@@ -25,6 +25,8 @@ public class UIManager {
     private final ImageView heart2;
     private final ImageView heart3;
     private final TextView scoreTextView;
+    private final TextView levelTextView;
+
 
     public UIManager(Context context) {
         this.context = context;
@@ -32,6 +34,7 @@ public class UIManager {
         heart2 = ((MainActivity) context).findViewById(R.id.heart2);
         heart3 = ((MainActivity) context).findViewById(R.id.heart3);
         scoreTextView = ((MainActivity) context).findViewById(R.id.score);
+        levelTextView = ((MainActivity) context).findViewById(R.id.level);
     }
 
     public void updateLives(int lives) {
@@ -45,6 +48,11 @@ public class UIManager {
         scoreTextView.setText(scoreText);
     }
 
+    public void updateLevel(int lv) {
+        String levelText = context.getString(R.string.level_text, lv);
+        levelTextView.setText(levelText);
+    }
+
     public void statGame(GameManager gameManager){
         gameManager.startGame();
     }
@@ -53,7 +61,6 @@ public class UIManager {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Enter Your Name");
 
-        // יצירת פריסה מותאמת אישית
         LinearLayout layout = new LinearLayout(context);
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setPadding(50, 40, 50, 10);

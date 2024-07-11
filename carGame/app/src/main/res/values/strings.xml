@@ -2,6 +2,8 @@
     <string name="app_name">Dragon Ball</string>
     <string name="score_text">Score: %d</string>
     <string name="game_title">Dragon Ball</string>
+    <string name="level_text">Level: %d</string>
+
     <!--arrows-->
     <string name="left_arrow_desc">Left Arrow</string>
     <string name="right_arrow_desc">Right Arrow</string>

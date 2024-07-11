@@ -22,6 +22,15 @@
         android:textSize="30sp"
         android:textStyle="bold"
         android:background="@drawable/rounded_background"/>
+    <TextView
+        android:id="@+id/level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/level_text"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/primary_text"
+        />
     <!-- upper layout -->
     <LinearLayout
         android:id="@+id/up_layout"

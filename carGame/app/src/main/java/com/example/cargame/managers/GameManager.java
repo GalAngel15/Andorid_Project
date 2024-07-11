@@ -30,6 +30,8 @@ public class GameManager implements PlayerNameCallback {
     private Location currentLocation;
     private final Handler difficultyHandler = new Handler();
     private LocationManager locationManager;
+    private int level=1;
+
 
     public GameManager(Context context, UIManager uiManager, Character character, ObstacleManager obstacleManager) {
         this.context = context;
@@ -92,9 +94,11 @@ public class GameManager implements PlayerNameCallback {
         @Override
         public void run() {
             if (gameOver) return;
+            level++;
+            uiManager.updateLevel(level);
             dummyTimer = dummyTimer * 0.9;
             delayTimer = (long) dummyTimer;
-            difficultyHandler.postDelayed(this, 10000); // קביעת תזמון חדש לעוד 10 שניות
+            difficultyHandler.postDelayed(this, 10000);
         }
     };
 
@@ -119,11 +123,14 @@ public class GameManager implements PlayerNameCallback {
         }
     }
 
+
     private void resetGame() {
         lives = 3;
         ticks = 0;
+        level=1;
         dummyTimer = 1000;
         delayTimer = 1000;
+        uiManager.updateLevel(level);
         uiManager.updateLives(lives);
         uiManager.updateScore(ticks);
         obstacleManager.clearObstacles();
