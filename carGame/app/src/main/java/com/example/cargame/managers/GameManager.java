@@ -5,6 +5,7 @@ import android.location.Location;
 import android.os.Handler;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.cargame.models.Character;
@@ -49,16 +50,14 @@ public class GameManager implements PlayerNameCallback {
         this.locationManager = locationManager;
     }
 
-    public void setCurrentLocation(Location location) {
-        this.currentLocation = location;
-    }
-
     public void startGame() {
         if (locationManager != null) {
             locationManager.getLastLocation(location -> {
                 if (location != null) {
                     currentLocation = location;
                     startGameInternal();
+                }else {
+                    currentLocation = locationManager.getdefaultLocation();
                 }
             });
         } else {
@@ -162,7 +161,7 @@ public class GameManager implements PlayerNameCallback {
                 Player player = new Player(playerName, ticks, currentLocation.getLatitude(), currentLocation.getLongitude());
                 scoreManager.addPlayer(player);
             } else {
-                Player player = new Player(playerName, ticks, 0, 0); // ברירת מחדל אם לא נמצא מיקום
+                Player player = new Player(playerName, ticks, 0, 0);
                 scoreManager.addPlayer(player);
             }
         }

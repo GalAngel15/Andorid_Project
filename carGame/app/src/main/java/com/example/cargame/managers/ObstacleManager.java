@@ -15,7 +15,7 @@ public class ObstacleManager {
     private final List<Obstacle> obstacles = new ArrayList<>();
     private final ImageView[][] grid;
     private final int[] enemies = {R.drawable.frieza, R.drawable.kidbuu, R.drawable.goldenfrieza};
-    private final int bounusImg = R.drawable.bonus;
+    private final int bonusImg = R.drawable.bonus;
 
     public ObstacleManager(ImageView[][] grid) {
         this.grid = grid;
@@ -32,8 +32,8 @@ public class ObstacleManager {
     public void addBonus() {
         Random rand = new Random();
         int lane = rand.nextInt(grid[0].length);
-        grid[0][lane].setImageResource(bounusImg);
-        obstacles.add(new Obstacle(0, lane, bounusImg));
+        grid[0][lane].setImageResource(bonusImg);
+        obstacles.add(new Obstacle(0, lane, bonusImg));
     }
 
     public void moveAllObstaclesDown(Character character, GameManager gameManager) {

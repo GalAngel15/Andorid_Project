@@ -116,7 +116,7 @@ public class ScoreActivity extends BaseActivity implements OnMapReadyCallback {
     private void showPlayerLocationOnMap(String playerName) {
         LatLng playerLatLng = playerLocations.get(playerName);
         if (playerLatLng != null) {
-            myMap.clear(); // מנקה את הסימנים הקודמים
+            myMap.clear();
             myMap.addMarker(new MarkerOptions().position(playerLatLng).title(playerName + "'s location"));
             myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(playerLatLng, 15.0f));
         }

@@ -77,7 +77,6 @@ public class ManuActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        locationManager.checkLocationAccess();
     }
 
     @Override

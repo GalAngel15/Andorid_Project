@@ -7,13 +7,14 @@ import android.os.Handler;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import android.util.Log;
 
 public class MusicManager {
 
     private MediaPlayer mediaPlayer;
     private Context context;
     private int musicResource;
-    private Executor executor;
+    private final Executor executor;
 
     public MusicManager(Context context, int musicResource) {
         this.context = context;
@@ -47,27 +48,25 @@ public class MusicManager {
         }
     }
 
-    // Pause the music
     public void pauseMusic() {
         if (mediaPlayer != null && mediaPlayer.isPlaying()) {
             mediaPlayer.pause();
         }
     }
 
-    // Resume the music
     public void resumeMusic() {
         if (mediaPlayer != null && !mediaPlayer.isPlaying()) {
             mediaPlayer.start();
         }
     }
 
-    // הגדרת עוצמת הקול
     public void setVolume(float volume) {
         if (mediaPlayer != null) {
             mediaPlayer.setVolume(volume, volume);
         }
     }
 
+    //play temp sound
     public void momentMusic(MusicManager music, MusicManager collisionSound) {
         music.setVolume(0.2f);
         collisionSound.startMusic(false);
@@ -79,5 +78,4 @@ public class MusicManager {
             ((ExecutorService) executor).shutdown();
         }
     }
-
 }

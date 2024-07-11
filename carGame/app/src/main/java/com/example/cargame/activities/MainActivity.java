@@ -2,6 +2,7 @@ package com.example.cargame.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import androidx.annotation.NonNull;
@@ -117,7 +118,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        gameManager.stopGame();
         if (moveDetector != null)
             moveDetector.stop();
     }

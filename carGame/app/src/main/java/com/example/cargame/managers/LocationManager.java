@@ -55,4 +55,8 @@ public class LocationManager {
             }
         }
     }
+
+    public Location getdefaultLocation() {
+        return defaultLocation;
+    }
 }
